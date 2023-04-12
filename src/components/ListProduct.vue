@@ -1,85 +1,90 @@
 <template>
-   
-        <section class="shop" >
+
+    <section class="shop">
         <h2 class="section-title">Danh Sách Sản Phẩm</h2>
         <div class="shop-content">
-            <div class="product-box" v-for="(product,index) in products" v-bind:key="index" >
-                <img :src="url+product.image[0].path" alt="" class="product-img" @click="details(product.id)">
-                <h2 class="product-title" @click="details(product.id)">{{product.productName}} </h2>
-                <span class="price">{{convertMoney(product.price)}}</span>
+            <div class="product-box" v-for="(product, index) in products" v-bind:key="index">
+                <img :src="url + product.images[0].path" alt="" class="product-img" @click="details(product.id)">
+                <h2 class="product-title" @click="details(product.id)">{{ product.productName }} </h2>
+                <span class="price">{{ convertMoney(product.price) }}</span>
                 <div class="box-icon-shoping" @click.prevent="updateCart(product)">
-                    <box-icon name='shopping-bag' animation='tada' color='#ffffff' ></box-icon>
+                    <box-icon name='shopping-bag' animation='tada' color='#ffffff'></box-icon>
                 </div>
             </div>
         </div>
-        </section>
-   
+    </section>
+
 
 </template>
 <script>
-    export default {
-        props :['products','updateCart'],
-        data(){
-            return{    
-                url : "https://localhost:5001/"
-            }
+export default {
+    props: ['products', 'updateCart'],
+    data() {
+        return {
+            url: "https://localhost:5001/"
+        }
+    },
+    methods: {
+        convertMoney(value) {
+            return  new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
         },
-        methods: {
-            convertMoney(num){
-                return num.toLocaleString('it-IT', { style: 'currency', currency: 'vnd' });
-            },
-            details(title){
-                this.$router.push('/products/' + title)
-            }
+        details(title) {
+            this.$router.push('/products/' + title)
         }
     }
+}
 </script>
 <style>
-section{
-    
-}
+section {}
 
-.section-title{
+.section-title {
     font-size: 1.5rem;
     font-weight: 600;
     text-align: center;
 }
-.shop{
+
+.shop {
     margin-top: 2rem;
     margin-bottom: 2rem;
 }
-.shop-content{
+
+.shop-content {
     width: 1400px;
     margin-left: auto;
     margin-right: auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(auto,330px));
+    grid-template-columns: repeat(auto-fit, minmax(auto, 330px));
     gap: 1.5rem;
 }
 
-.product-box{
+.product-box {
     position: relative;
-    
+
 }
-.product-box:hover{
+
+.product-box:hover {
     padding: 10px;
     border: 1px solid var(--text-color);
     transition: 0.4s;
     border-radius: 10px;
 }
-.product-img{
+
+.product-box .product-img {
     margin-left: auto;
     margin-right: auto;
     width: 50%;
     height: 216px;
     margin-bottom: 0.5rem;
     border-radius: 10px;
-    
+    display: block;
+
 }
-.price{
+
+.price {
     font-weight: 500;
 }
-.box-icon-shoping{
+
+.box-icon-shoping {
     position: absolute;
     font-size: 1.8rem;
     cursor: pointer;
@@ -89,14 +94,15 @@ section{
     padding: 5px;
     border-radius: 10px;
 }
-.box-icon-shoping:hover{
+
+.box-icon-shoping:hover {
     background: hsl(249, 32%, 17%);
 }
-.product-title{
+
+.product-title {
     font-size: 1.1rem;
     font-weight: 600;
     text-transform: uppercase;
     margin-bottom: 0.5rem;
 }
-
 </style>

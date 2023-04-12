@@ -1,6 +1,7 @@
 <template>
+    <Navbar></Navbar>
     <div class="container">
-      <ProductCarousel :images="products.image"/>
+      <ProductCarousel :images="products.images"/>
     <ProductInfo :Products="products" @buyProduct="buyProductCheckOut" :quantity="quantity" :pickSize="pickSize"></ProductInfo>
     </div>
 
@@ -8,24 +9,24 @@
 </template>
 
 <script>
-
+import Navbar from "@/components/Navbar.vue";
 import ProductCarousel from "@/components/ProductCarousel.vue"
 import ProductInfo from "@/components/ProductInfo.vue"
 import axios from "axios";
 export default {
 name: 'ProductDetails',
-created(){
-        axios.get("https://localhost:5001/api/products/"+ this.$route.params.productID).then(response=> {
+async created(){
+        await axios.get("products/"+ this.$route.params.productID).then(response=> {
           this.products = response.data
-          console.log(response.data.image)
+          console.log("cua product details",response.data)
       }).catch(e => {
         console.log(e);
   });
 },
 components :{
-  ProductCarousel,
-  ProductInfo
-  
+    ProductCarousel,
+    ProductInfo,
+    Navbar,
 },
 data () {
   return {
